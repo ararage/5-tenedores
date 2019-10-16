@@ -23,6 +23,8 @@ const LoginOptions = {
   }
 };
 
-function TestForm(props) {}
+function TestForm(props) {
+  <Form></Form>;
+}
 
 export default TestForm;
