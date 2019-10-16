@@ -1,30 +1,23 @@
 import React from "react";
 import t from "tcomb-form-native";
+import { View } from 'react-native';
 
 const Form = t.form.Form;
 
-const LoginStruct = t.struct({
-  user: t.String,
-  password: t.String
-});
 
-const LoginOptions = {
-  fields: {
-    user: {
-      label: "Nombre de usuario (*)",
-      placeholder: "Nombre de usuario"
-    },
-    password: {
-      label: "Contraseña (*)",
-      placeholder: "Contraseña",
-      password: true,
-      secureTextEntry: true
-    }
-  }
-};
-
-function TestForm(props) {
-  <Form></Form>;
+function TestForm(props){
+  console.log("NO MAMES")
+  return(
+    <View>
+      <Form
+        forwardRef={props.reference}
+        type={props.struct}
+        options={props.options}
+        value={props.value}
+        onChange={props.onChange}
+      />
+    </View>
+  );
 }
 
 export default TestForm;
