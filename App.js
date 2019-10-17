@@ -7,41 +7,45 @@ import t from "tcomb-form-native";
 const Form = t.form.Form;
 
 // Components
-import InputTemplate from './src/components/forms/templates/InputTemplate';
-import PreLoader from './src/components/forms/PreLoader'
-
+import InputTemplate from "./src/components/forms/templates/InputTemplate";
+import PreLoader from "./src/components/forms/PreLoader";
 
 export default class App extends React.Component {
-
-  constructor(){
+  constructor() {
     super();
     this.state = {
-      testFormValue:{
-        user:"",
-        password:""
+      testFormValue: {
+        user: "",
+        password: ""
       },
-      testFormError:"",
-      loaded:true
-    }
+      testFormError: "",
+      loaded: false
+    };
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({ loaded: true });
+    }, 2000);
   }
 
   sendFormTest = () => {
-    console.log("Enviado")
-    console.log(this.state.testFormValue)
     const validate = this.refs.formTest.getValue();
     this.setState({
-      testFormError: !validate ? "Rellena todos los campos" :""
-    })
-  }
+      testFormError: !validate ? "Rellena todos los campos" : ""
+    });
+  };
 
-  onChange = (testFormValue) => {
-    console.log(testFormValue)
-    this.setState({testFormValue})
-  }
+  onChange = testFormValue => {
+    this.setState({ testFormValue });
+  };
 
   render() {
-    const { testFormValue, testFormError } = this.state;
-    console.log(testFormValue)
+    const { testFormValue, testFormError, loaded } = this.state;
+    console.log(testFormValue);
+    if (!loaded) {
+      return <PreLoader />;
+    }
     return (
       <View style={styles.container}>
         <Form
@@ -51,8 +55,8 @@ export default class App extends React.Component {
           value={testFormValue}
           onChange={v => this.onChange(v)}
         />
-         <Button title="Login" onPress={this.sendFormTest.bind(this)} />
-         <Text style={styles.testFormatErrorText}>{testFormError}</Text>
+        <Button title="Login" onPress={this.sendFormTest.bind(this)} />
+        <Text style={styles.testFormatErrorText}>{testFormError}</Text>
       </View>
     );
   }
@@ -67,21 +71,21 @@ const LoginOptions = {
   fields: {
     user: {
       template: InputTemplate,
-      config:{
-        placeholder:"Introduce tu usuario",
-        secureTextEntry:false,
-        iconType:"font-awesome",
-        iconName:"user"
+      config: {
+        placeholder: "Introduce tu usuario",
+        secureTextEntry: false,
+        iconType: "font-awesome",
+        iconName: "user"
       }
     },
     password: {
       template: InputTemplate,
-      config:{
-        placeholder:"Introduce tu contraseña",
-        password:true,
+      config: {
+        placeholder: "Introduce tu contraseña",
+        password: true,
         secureTextEntry: true,
-        iconType:"font-awesome",
-        iconName:"lock"
+        iconType: "font-awesome",
+        iconName: "lock"
       }
     }
   }
@@ -92,12 +96,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     justifyContent: "center",
-    paddingLeft:40,
-    paddingRight:40
+    paddingLeft: 40,
+    paddingRight: 40
   },
-  testFormatErrorText:{
-    paddingTop:30,
-    color:'#f00',
-    textAlign:'center'
+  testFormatErrorText: {
+    paddingTop: 30,
+    color: "#f00",
+    textAlign: "center"
   }
 });
